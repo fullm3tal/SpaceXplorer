@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontwarn org.conscrypt.**
+-dontwarn org.bouncycastle.**
+-dontwarn org.openjsse.**
+
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+
+-keep class com.velotio.spacexplorer.launch_list.model.** { *; }

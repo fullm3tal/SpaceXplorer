@@ -7,6 +7,16 @@ android {
     namespace 'com.velotio.spacexplorer'
     compileSdk 33
 
+    signingConfigs {
+        config {
+            keyAlias 'spacex'
+            keyPassword 'spacex'
+            keyPassword 'spacex'
+            storeFile file('spacex.jks')
+            storePassword 'spacex'
+        }
+    }
+
     defaultConfig {
         applicationId "com.velotio.spacexplorer"
         minSdk 24
@@ -23,7 +33,15 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
