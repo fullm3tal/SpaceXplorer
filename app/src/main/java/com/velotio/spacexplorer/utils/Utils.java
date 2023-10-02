@@ -1,4 +1,4 @@
-package com.velotio.spacexplorer;
+package com.velotio.spacexplorer.utils;
 
 import android.os.Build;
 

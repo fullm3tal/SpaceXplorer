@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/launchDetailFragment"
-        android:name="com.velotio.spacexplorer.LaunchDetailFragment"
+        android:name="com.velotio.spacexplorer.launch_detail.LaunchDetailFragment"
         android:label="LaunchDetailFragment" />
 
 </navigation>

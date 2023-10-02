@@ -6,7 +6,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
-import com.velotio.spacexplorer.Utils;
+import com.velotio.spacexplorer.utils.Utils;
 import com.velotio.spacexplorer.db.AppDatabase;
 import com.velotio.spacexplorer.db.LaunchInfoDao;
 import com.velotio.spacexplorer.service.SpaceXService;

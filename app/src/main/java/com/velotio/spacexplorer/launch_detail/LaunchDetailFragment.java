@@ -1,4 +1,4 @@
-package com.velotio.spacexplorer;
+package com.velotio.spacexplorer.launch_detail;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.velotio.spacexplorer.R;
 import com.velotio.spacexplorer.databinding.FragmentLaunchDetailBinding;
 import com.velotio.spacexplorer.launch_list.LaunchListViewModel;
 
