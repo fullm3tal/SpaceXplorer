@@ -76,6 +76,8 @@ public class LaunchInfo implements Serializable {
     @Expose
     private String details;
 
+    private int colorId = R.color.blue;
+
     private final static long serialVersionUID = 7238764591150557943L;
 
     private boolean favorite = false;
@@ -156,13 +158,31 @@ public class LaunchInfo implements Serializable {
 
     }
 
+    public int getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(int colorId) {
+        this.colorId = colorId;
+    }
+
+    /**
+     *  Utility method to set Launch Status and color for statuses
+     */
     public void updateSpaceLaunchStatus(){
-        if(launchSuccess != null && launchSuccess) {
-            setSpaceLaunchStatus("Success");
-        } else if (upcoming != null && upcoming) {
-            setSpaceLaunchStatus("Upcoming");
-        } else {
-            setSpaceLaunchStatus("Failure");
+        try {
+            if (launchSuccess != null && launchSuccess) {
+                setSpaceLaunchStatus("Success");
+                setColorId(R.color.green);
+            } else if (upcoming != null && upcoming) {
+                setSpaceLaunchStatus("Upcoming");
+                setColorId(R.color.blue);
+            } else {
+                setSpaceLaunchStatus("Failure");
+                setColorId(R.color.red);
+            }
+        }catch (Exception e) {
+            setColorId(R.color.blue);
         }
     }
 

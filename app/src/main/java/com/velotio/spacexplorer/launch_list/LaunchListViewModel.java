@@ -33,6 +33,11 @@ public class LaunchListViewModel extends ViewModel {
         return launchListResponseLiveData;
     }
 
+    /**
+     *
+     * @param isFavorite true or false
+     * @param position item's position in list
+     */
     public void setLaunchFavorite(boolean isFavorite, int position) {
         try {
             LaunchInfo launchInfo = Objects.requireNonNull(launchListResponseLiveData.getValue()).list.get(position);

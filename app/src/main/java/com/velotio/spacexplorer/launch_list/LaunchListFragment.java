@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,10 +37,7 @@ public class LaunchListFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(LaunchListViewModel.class);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         binding.rvLaunchList.setLayoutManager(manager);
-
-        binding.swipeRefresh.setOnRefreshListener(() -> {
-            mViewModel.setLaunchList();
-        });
+        binding.swipeRefresh.setOnRefreshListener(() -> mViewModel.setLaunchList());
 
         mViewModel.getLaunchInfo().observe(getViewLifecycleOwner(), launchListResponse -> {
             if (launchListResponse.loading) {

@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,7 +55,7 @@ public class LaunchListAdapter extends RecyclerView.Adapter<LaunchListAdapter.La
             if (launchInfo != null) {
                 launchInfo.updateSpaceLaunchStatus();
             }
-
+            launchBinding.tvLaunchStatus.setTextColor(ContextCompat.getColor(launchBinding.getRoot().getContext(), launchInfo.getColorId()));
             launchBinding.setLaunchInfo(launchInfo);
             launchBinding.executePendingBindings();
             launchBinding.ivFavorite.setOnClickListener(v -> {

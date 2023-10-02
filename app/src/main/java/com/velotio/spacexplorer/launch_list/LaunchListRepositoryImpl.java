@@ -20,12 +20,8 @@ import retrofit2.Response;
 
 public class LaunchListRepositoryImpl implements ILaunchListRepository {
 
-    //TODO remove thread
-    Thread outerThread;
-
     MutableLiveData<LaunchListResponse> listMutableLiveData = new MutableLiveData<>(new LaunchListResponse());
     SpaceXService service;
-
     LaunchInfoDao dao;
 
     @Inject
@@ -34,6 +30,10 @@ public class LaunchListRepositoryImpl implements ILaunchListRepository {
         service = spaceXService;
     }
 
+    /**
+     *  Fetches data from the local storage first and then from the server.
+     * @return MutableLiveData<LaunchListResponse>
+     */
     @Override
     public MutableLiveData<LaunchListResponse> fetchLaunchListFromServer() {
         try {
@@ -47,15 +47,11 @@ public class LaunchListRepositoryImpl implements ILaunchListRepository {
                     response.list = list;
                     listMutableLiveData.postValue(response);
                 }
-                outerThread = Thread.currentThread();
                 service.fetchLaunchList().enqueue(new Callback<ArrayList<LaunchInfo>>() {
                     @Override
                     public void onResponse(Call<ArrayList<LaunchInfo>> call, Response<ArrayList<LaunchInfo>> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            System.out.println("Middle Thread " + Thread.currentThread().getName());
                             AppDatabase.databaseWriteExecutor.execute(() -> {
-                                System.out.println("Inner Thread " + Thread.currentThread().getName());
-                                System.out.println("Is Outer thread alive " + outerThread.isAlive());
                                 dao.deleteAll(false);
                                 dao.insertAll(response.body());
                                 ArrayList<LaunchInfo> list = (ArrayList<LaunchInfo>) dao.getAllLaunchDetails();
@@ -89,6 +85,11 @@ public class LaunchListRepositoryImpl implements ILaunchListRepository {
         return listMutableLiveData;
     }
 
+
+    /**
+     *  Method to update launch info
+     * @param launchInfo
+     */
     @Override
     public void updateLaunchInfo(LaunchInfo launchInfo) {
         AppDatabase.databaseWriteExecutor.execute(() -> dao.updateLaunchInfo(launchInfo));
