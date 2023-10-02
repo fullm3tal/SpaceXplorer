@@ -53,7 +53,7 @@ public class LaunchListViewModelTest extends TestCase {
         viewModel.setLaunchList();
         // Act
         // Optional: Use LiveDataTestUtil or similar utility to get the LiveData value.
-        LiveData<LaunchListResponse> value = viewModel.getLaunchInfo();
+        LiveData<LaunchListResponse> value = viewModel.getSpaceLaunchInfo();
         assertEquals(response.list.size(), value.getValue().list.size());
     }
 
@@ -69,7 +69,7 @@ public class LaunchListViewModelTest extends TestCase {
         viewModel.setLaunchList();
         // Act
         // Optional: Use LiveDataTestUtil or similar utility to get the LiveData value.
-        LiveData<LaunchListResponse> value = viewModel.getLaunchInfo();
+        LiveData<LaunchListResponse> value = viewModel.getSpaceLaunchInfo();
         assertEquals(response.error, value.getValue().error);
     }
 
@@ -81,7 +81,7 @@ public class LaunchListViewModelTest extends TestCase {
         viewModel.setLaunchList();
         // Act
         // Optional: Use LiveDataTestUtil or similar utility to get the LiveData value.
-        LiveData<LaunchListResponse> value = viewModel.getLaunchInfo();
+        LiveData<LaunchListResponse> value = viewModel.getSpaceLaunchInfo();
         System.out.println("Value "+value.getValue().loading);
         assertEquals(data.getValue().loading, value.getValue().loading);
         LaunchListResponse response = new LaunchListResponse();
@@ -89,7 +89,7 @@ public class LaunchListViewModelTest extends TestCase {
         data.setValue(response);
         when(repository.fetchLaunchListFromServer()).thenReturn(data);
         viewModel.setLaunchList();
-        value = viewModel.getLaunchInfo();
+        value = viewModel.getSpaceLaunchInfo();
         System.out.println("Value "+value.getValue().loading);
         assertEquals(data.getValue().loading, value.getValue().loading);
     }
