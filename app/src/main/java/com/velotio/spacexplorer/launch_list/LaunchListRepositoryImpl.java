@@ -1,8 +1,12 @@
 package com.velotio.spacexplorer.launch_list;
 
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
+import com.velotio.spacexplorer.Utils;
 import com.velotio.spacexplorer.db.AppDatabase;
 import com.velotio.spacexplorer.db.LaunchInfoDao;
 import com.velotio.spacexplorer.service.SpaceXService;
@@ -34,6 +38,7 @@ public class LaunchListRepositoryImpl implements ILaunchListRepository {
      *  Fetches data from the local storage first and then from the server.
      * @return MutableLiveData<LaunchListResponse>
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public MutableLiveData<LaunchListResponse> fetchLaunchListFromServer() {
         try {
@@ -42,6 +47,7 @@ public class LaunchListRepositoryImpl implements ILaunchListRepository {
                 ArrayList<LaunchInfo> list = (ArrayList<LaunchInfo>) dao.getAllLaunchDetails();
                 System.out.println("Outer Thread " + Thread.currentThread().getName());
                 if (!list.isEmpty()) {
+                    fetchLocalDateTime(list);
                     LaunchListResponse response = new LaunchListResponse();
                     response.loading = false;
                     response.list = list;
@@ -56,6 +62,7 @@ public class LaunchListRepositoryImpl implements ILaunchListRepository {
                                 dao.insertAll(response.body());
                                 ArrayList<LaunchInfo> list = (ArrayList<LaunchInfo>) dao.getAllLaunchDetails();
                                 if (!list.isEmpty()) {
+                                    fetchLocalDateTime(list);
                                     LaunchListResponse launchListResponse = new LaunchListResponse();
                                     launchListResponse.loading = false;
                                     launchListResponse.list = list;
@@ -93,6 +100,14 @@ public class LaunchListRepositoryImpl implements ILaunchListRepository {
     @Override
     public void updateLaunchInfo(LaunchInfo launchInfo) {
         AppDatabase.databaseWriteExecutor.execute(() -> dao.updateLaunchInfo(launchInfo));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void fetchLocalDateTime(ArrayList<LaunchInfo> list) {
+        ArrayList<LaunchInfo> data = list;
+       list.forEach(launchInfo -> {
+            launchInfo.setLaunchDateLocal(Utils.getLocalDateTime(launchInfo.getLaunchDateLocal()));
+        });
     }
 
 }

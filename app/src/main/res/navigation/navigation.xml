@@ -10,6 +10,14 @@
         android:name="com.velotio.spacexplorer.launch_list.LaunchListFragment"
         android:label="fragment_launch_list"
         tools:layout="@layout/fragment_launch_list">
+        <action
+            android:id="@+id/action_launchListFragment_to_launchDetailFragment"
+            app:destination="@id/launchDetailFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/launchDetailFragment"
+        android:name="com.velotio.spacexplorer.LaunchDetailFragment"
+        android:label="LaunchDetailFragment" />
 
 </navigation>

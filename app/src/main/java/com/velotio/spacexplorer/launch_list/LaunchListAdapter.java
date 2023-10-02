@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.velotio.spacexplorer.R;
 import com.velotio.spacexplorer.databinding.ViewLaunchItemBinding;
 import com.velotio.spacexplorer.launch_list.model.LaunchInfo;
@@ -16,12 +18,13 @@ import java.util.ArrayList;
 
 public class LaunchListAdapter extends RecyclerView.Adapter<LaunchListAdapter.LaunchListViewHolder> {
 
-    ArrayList<LaunchInfo> list;
+    ArrayList<LaunchInfo> list = new ArrayList<>();
     public LaunchListViewModel viewModel;
 
-    public LaunchListAdapter(LaunchListViewModel viewModel, ArrayList<LaunchInfo> list) {
+    RequestOptions options = new RequestOptions().centerCrop().placeholder(R.drawable.space).error(R.drawable.space);
+
+    public LaunchListAdapter(LaunchListViewModel viewModel) {
         this.viewModel = viewModel;
-        this.list = list;
     }
 
     @NonNull
@@ -57,12 +60,23 @@ public class LaunchListAdapter extends RecyclerView.Adapter<LaunchListAdapter.La
             }
             launchBinding.tvLaunchStatus.setTextColor(ContextCompat.getColor(launchBinding.getRoot().getContext(), launchInfo.getColorId()));
             launchBinding.setLaunchInfo(launchInfo);
+            Glide.with(launchBinding.getRoot().getContext()).load(launchInfo.getLinks().getMissionPatchSmall()).apply(options).into(launchBinding.ivLaunchIcon);
             launchBinding.executePendingBindings();
             launchBinding.ivFavorite.setOnClickListener(v -> {
                 viewModel.setLaunchFavorite(!launchInfo.getFavorite(), position);
             });
+
+            launchBinding.clLaunchInfo.setOnClickListener(v -> viewModel.navigateToLaunchDetail(launchInfo));
+
         }
 
     }
+
+    public void updateLaunchInfos(ArrayList<LaunchInfo> launchInfos) {
+        list.clear();
+        list.addAll(launchInfos);
+        notifyDataSetChanged();
+    }
+
 }
 

@@ -68,6 +68,8 @@ public class LaunchInfo implements Serializable {
     @Expose
     private LaunchFailureDetails launchFailureDetails;
 
+    public String detailLaunchStatus;
+
     @Embedded
     @SerializedName("links")
     @Expose
@@ -113,7 +115,7 @@ public class LaunchInfo implements Serializable {
     /**
      * No args constructor for use in serialization
      */
-    public LaunchInfo(){
+    public LaunchInfo() {
 
     }
 
@@ -166,6 +168,15 @@ public class LaunchInfo implements Serializable {
         this.colorId = colorId;
     }
 
+    public String getDetailLaunchStatus() {
+        return detailLaunchStatus;
+    }
+
+    public void setDetailLaunchStatus(String detailLaunchStatus) {
+        this.detailLaunchStatus = detailLaunchStatus;
+    }
+
+
     /**
      *  Utility method to set Launch Status and color for statuses
      */
@@ -174,11 +185,18 @@ public class LaunchInfo implements Serializable {
             if (launchSuccess != null && launchSuccess) {
                 setSpaceLaunchStatus("Success");
                 setColorId(R.color.green);
+                setDetailLaunchStatus("Success");
             } else if (upcoming != null && upcoming) {
                 setSpaceLaunchStatus("Upcoming");
                 setColorId(R.color.blue);
+                setDetailLaunchStatus("Upcoming");
             } else {
                 setSpaceLaunchStatus("Failure");
+                if (launchFailureDetails != null && launchFailureDetails.getReason() != null) {
+                    setDetailLaunchStatus(launchFailureDetails.getReason());
+                } else {
+                    setDetailLaunchStatus("Failure");
+                }
                 setColorId(R.color.red);
             }
         }catch (Exception e) {

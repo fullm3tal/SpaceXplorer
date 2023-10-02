@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="launchInfo"
+            type="com.velotio.spacexplorer.launch_list.model.LaunchInfo" />
+
+        <variable
+            name="countDown"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:liftOnScroll="true">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:navigationIcon="@drawable/baseline_arrow_back"
+                app:title="@{launchInfo.getMissionName()}"
+                app:titleTextColor="@android:color/black" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                tools:context=".LaunchDetailFragment">
+
+                <TextView
+                    android:id="@+id/tvMissionName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@{countDown}"
+                    android:textColor="@color/black"
+                    android:textSize="28dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivLaunchIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    android:src="@drawable/space"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvMissionName"
+                    app:shapeAppearanceOverlay="@style/circleImageView" />
+
+                <TextView
+                    android:id="@+id/ivLaunchName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="4dp"
+                    android:ellipsize="marquee"
+                    android:hint="Space-X"
+                    android:lines="1"
+                    android:text="@{launchInfo.getMissionName()}"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/ivLaunchDate"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintLeft_toRightOf="@id/ivLaunchIcon"
+                    app:layout_constraintRight_toLeftOf="@id/ivLaunchNickName"
+                    app:layout_constraintTop_toTopOf="@id/ivLaunchIcon"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/ivLaunchDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="marquee"
+                    android:hint="7 October"
+                    android:lines="1"
+                    android:text="@{launchInfo.getLaunchDateLocal()}"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/ivLaunchIcon"
+                    app:layout_constraintEnd_toEndOf="@id/ivLaunchName"
+                    app:layout_constraintStart_toStartOf="@id/ivLaunchName"
+                    app:layout_constraintTop_toBottomOf="@id/ivLaunchName" />
+
+                <TextView
+                    android:id="@+id/ivLaunchNickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:hint="Falcon"
+                    android:text="@{launchInfo.getRocket().getRocketName()}"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/ivLaunchIcon"
+                    app:layout_constraintLeft_toRightOf="@id/ivLaunchName"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivLaunchIcon"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewRocketDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivLaunchIcon"
+                    app:strokeColor="@color/black">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tvRocketTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="@{launchInfo.getRocket().getRocketName()}"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvRocketDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="start"
+                            android:text="@string/rocket_description"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvRocketTitle" />
+
+                        <TextView
+                            android:id="@+id/tvTypeLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="start"
+                            android:text="Type:"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toLeftOf="@id/tvType"
+                            app:layout_constraintTop_toBottomOf="@id/tvRocketDescription" />
+
+                        <TextView
+                            android:id="@+id/tvType"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:text="@{launchInfo.getRocket().getRocketType()}"
+                            android:textSize="12dp"
+                            app:layout_constraintBottom_toBottomOf="@id/tvTypeLabel"
+                            app:layout_constraintHorizontal_weight="1"
+                            app:layout_constraintLeft_toRightOf="@id/tvTypeLabel"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvTypeLabel" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnWatch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:visibility="@{launchInfo.links.videoLink == null ? View.GONE : View.VISIBLE}"
+                    android:text="Watch"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardViewRocketDetails" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewStatusDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnWatch"
+                    app:strokeColor="@color/black">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tvStatusLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="Launch Status:"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toLeftOf="@id/tvStatus"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvStatus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:text="@{launchInfo.getSpaceLaunchStatus()}"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            app:layout_constraintBottom_toBottomOf="@id/tvStatusLabel"
+                            app:layout_constraintHorizontal_weight="1"
+                            app:layout_constraintLeft_toRightOf="@id/tvStatusLabel"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvStatusLabel" />
+
+                        <TextView
+                            android:id="@+id/tvStatusDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="start"
+                            android:text="@{launchInfo.getDetailLaunchStatus()}"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvStatusLabel" />
+
+                        <TextView
+                            android:id="@+id/tvLaunchSiteLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="start"
+                            android:text="Launch Site:"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toLeftOf="@id/tvLaunchSite"
+                            app:layout_constraintTop_toBottomOf="@id/tvStatusDetails" />
+
+                        <TextView
+                            android:id="@+id/tvLaunchSite"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:text="@{launchInfo.getLaunchSite().siteNameLong}"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            app:layout_constraintBottom_toBottomOf="@id/tvLaunchSiteLabel"
+                            app:layout_constraintHorizontal_weight="1"
+                            app:layout_constraintLeft_toRightOf="@id/tvLaunchSiteLabel"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvLaunchSiteLabel" />
+
+                        <TextView
+                            android:id="@+id/tvLaunchWindowLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="start"
+                            android:text="Launch Window:"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvLaunchSiteLabel" />
+
+                        <TextView
+                            android:id="@+id/tvLaunchWindow"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:text="@{String.valueOf(launchInfo.launchWindow)}"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            app:layout_constraintBottom_toBottomOf="@id/tvLaunchWindowLabel"
+                            app:layout_constraintHorizontal_weight="1"
+                            app:layout_constraintLeft_toRightOf="@id/tvLaunchWindowLabel"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvLaunchWindowLabel" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewMissionPatch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardViewStatusDetails"
+                    app:strokeColor="@color/black">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/ivMissionPatch"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:padding="4dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewMissionDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardViewMissionPatch"
+                    app:strokeColor="@color/black">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tvMissionTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="Mission"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvMissionDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="start"
+                            android:text="@string/mission_description"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvMissionTitle" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <TextView
+                    android:id="@+id/tvLinksLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Links:"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardViewMissionDetails" />
+
+                <include
+                    android:id="@+id/includeRedditCampaign"
+                    layout="@layout/view_link_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:visibility="@{launchInfo.links.redditCampaign == null ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintTop_toBottomOf="@id/tvLinksLabel"
+                    bind:link="@{launchInfo.links.redditCampaign}"
+                    bind:linkLabel="@{String.valueOf(`Reddit Campaign`)}" />
+
+                <include
+                    android:id="@+id/includeRedditMedia"
+                    layout="@layout/view_link_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:visibility="@{launchInfo.links.redditMedia == null ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintTop_toBottomOf="@id/includeRedditCampaign"
+                    bind:link="@{launchInfo.links.redditMedia}"
+                    bind:linkLabel="@{String.valueOf(`Reddit Media`)}" />
+
+                <include
+                    android:id="@+id/includeArticleLink"
+                    layout="@layout/view_link_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:visibility="@{launchInfo.links.articleLink == null ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintTop_toBottomOf="@id/includeRedditMedia"
+                    bind:link="@{launchInfo.links.articleLink}"
+                    bind:linkLabel="@{String.valueOf(`Article`)}" />
+
+                <include
+                    android:id="@+id/includeWikipedia"
+                    layout="@layout/view_link_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{launchInfo.links.wikipedia == null ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/includeArticleLink"
+                    bind:link="@{launchInfo.links.wikipedia}"
+                    bind:linkLabel="@{String.valueOf(`Wikipedia`)}" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>

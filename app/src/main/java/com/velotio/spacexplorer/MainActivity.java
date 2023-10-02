@@ -24,10 +24,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        NavController navController = Navigation.findNavController(this, R.id.nav_host);
-        NavigationUI.setupWithNavController(binding.bottomNav, navController);
-        navController.addOnDestinationChangedListener((controller, navDestination, bundle) -> {
-
-        });
     }
 }
