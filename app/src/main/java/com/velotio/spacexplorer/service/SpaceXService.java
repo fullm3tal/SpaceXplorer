@@ -1,4 +1,4 @@
-package com.velotio.spacexplorer.di;
+package com.velotio.spacexplorer.service;
 
 import com.velotio.spacexplorer.launch_list.model.LaunchInfo;
 

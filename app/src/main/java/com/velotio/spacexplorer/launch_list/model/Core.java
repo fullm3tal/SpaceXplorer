@@ -1,12 +1,19 @@
 package com.velotio.spacexplorer.launch_list.model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Core implements Serializable
 {
 
+    @PrimaryKey
+    public Long id;
     @SerializedName("core_serial")
     @Expose
     private String coreSerial;
@@ -15,7 +22,7 @@ public class Core implements Serializable
     private Integer flight;
     @SerializedName("block")
     @Expose
-    private Object block;
+    private Integer block;
     @SerializedName("gridfins")
     @Expose
     private Boolean gridfins;
@@ -27,16 +34,16 @@ public class Core implements Serializable
     private Boolean reused;
     @SerializedName("land_success")
     @Expose
-    private Object landSuccess;
+    private Boolean landSuccess;
     @SerializedName("landing_intent")
     @Expose
     private Boolean landingIntent;
     @SerializedName("landing_type")
     @Expose
-    private Object landingType;
+    private String landingType;
     @SerializedName("landing_vehicle")
     @Expose
-    private Object landingVehicle;
+    private String landingVehicle;
     private final static long serialVersionUID = 1155706521717737453L;
 
     /**
@@ -59,7 +66,8 @@ public class Core implements Serializable
      * @param block
      * @param reused
      */
-    public Core(String coreSerial, Integer flight, Object block, Boolean gridfins, Boolean legs, Boolean reused, Object landSuccess, Boolean landingIntent, Object landingType, Object landingVehicle) {
+    @Ignore
+    public Core(String coreSerial, Integer flight, Integer block, Boolean gridfins, Boolean legs, Boolean reused, Boolean landSuccess, Boolean landingIntent, String landingType, String landingVehicle) {
         super();
         this.coreSerial = coreSerial;
         this.flight = flight;
@@ -89,11 +97,11 @@ public class Core implements Serializable
         this.flight = flight;
     }
 
-    public Object getBlock() {
+    public Integer getBlock() {
         return block;
     }
 
-    public void setBlock(Object block) {
+    public void setBlock(Integer block) {
         this.block = block;
     }
 
@@ -121,11 +129,11 @@ public class Core implements Serializable
         this.reused = reused;
     }
 
-    public Object getLandSuccess() {
+    public Boolean getLandSuccess() {
         return landSuccess;
     }
 
-    public void setLandSuccess(Object landSuccess) {
+    public void setLandSuccess(Boolean landSuccess) {
         this.landSuccess = landSuccess;
     }
 
@@ -137,19 +145,19 @@ public class Core implements Serializable
         this.landingIntent = landingIntent;
     }
 
-    public Object getLandingType() {
+    public String getLandingType() {
         return landingType;
     }
 
-    public void setLandingType(Object landingType) {
+    public void setLandingType(String landingType) {
         this.landingType = landingType;
     }
 
-    public Object getLandingVehicle() {
+    public String getLandingVehicle() {
         return landingVehicle;
     }
 
-    public void setLandingVehicle(Object landingVehicle) {
+    public void setLandingVehicle(String landingVehicle) {
         this.landingVehicle = landingVehicle;
     }
 

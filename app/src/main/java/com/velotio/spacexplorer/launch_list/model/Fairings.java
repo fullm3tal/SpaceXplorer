@@ -1,12 +1,21 @@
 package com.velotio.spacexplorer.launch_list.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+
+@Entity
 public class Fairings implements Serializable
 {
-
+    @ColumnInfo(name = "fairings_uid")
+    @PrimaryKey
+    public Long id;
     @SerializedName("reused")
     @Expose
     private Boolean reused;
@@ -18,7 +27,7 @@ public class Fairings implements Serializable
     private Boolean recovered;
     @SerializedName("ship")
     @Expose
-    private Object ship;
+    private String ship;
     private final static long serialVersionUID = 51770051369617186L;
 
     /**
@@ -35,7 +44,8 @@ public class Fairings implements Serializable
      * @param ship
      * @param reused
      */
-    public Fairings(Boolean reused, Boolean recoveryAttempt, Boolean recovered, Object ship) {
+
+    public Fairings(Boolean reused, Boolean recoveryAttempt, Boolean recovered, String ship) {
         super();
         this.reused = reused;
         this.recoveryAttempt = recoveryAttempt;
@@ -67,11 +77,11 @@ public class Fairings implements Serializable
         this.recovered = recovered;
     }
 
-    public Object getShip() {
+    public String getShip() {
         return ship;
     }
 
-    public void setShip(Object ship) {
+    public void setShip(String ship) {
         this.ship = ship;
     }
 

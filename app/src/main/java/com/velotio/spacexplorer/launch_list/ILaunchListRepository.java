@@ -1,11 +1,13 @@
 package com.velotio.spacexplorer.launch_list;
 
-import com.velotio.spacexplorer.ILaunchListResponse;
+import androidx.lifecycle.MutableLiveData;
 
-import javax.annotation.Nullable;
+import com.velotio.spacexplorer.launch_list.model.LaunchInfo;
+import com.velotio.spacexplorer.launch_list.model.LaunchListResponse;
 
 public interface ILaunchListRepository {
 
-  public void fetchLaunchListFromServer(@Nullable ILaunchListResponse iLaunchListResponse);
+  public MutableLiveData<LaunchListResponse> fetchLaunchListFromServer();
 
+  void updateLaunchInfo(LaunchInfo launchInfo);
 }

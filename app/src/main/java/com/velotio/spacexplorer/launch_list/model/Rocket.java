@@ -1,13 +1,23 @@
 package com.velotio.spacexplorer.launch_list.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Rocket implements Serializable
 {
 
+    @ColumnInfo(name = "rocket_uid")
+    @PrimaryKey
+    public Long id;
     @SerializedName("rocket_id")
     @Expose
     private String rocketId;
@@ -17,12 +27,7 @@ public class Rocket implements Serializable
     @SerializedName("rocket_type")
     @Expose
     private String rocketType;
-    @SerializedName("first_stage")
-    @Expose
-    private FirstStage firstStage;
-    @SerializedName("second_stage")
-    @Expose
-    private SecondStage secondStage;
+    @Embedded
     @SerializedName("fairings")
     @Expose
     private Fairings fairings;
@@ -38,19 +43,18 @@ public class Rocket implements Serializable
     /**
      *
      * @param rocketId
-     * @param secondStage
      * @param fairings
      * @param rocketType
      * @param rocketName
-     * @param firstStage
      */
-    public Rocket(String rocketId, String rocketName, String rocketType, FirstStage firstStage, SecondStage secondStage, Fairings fairings) {
+
+    @Ignore
+    public Rocket(String rocketId, String rocketName, String rocketType, Fairings fairings) {
         super();
         this.rocketId = rocketId;
         this.rocketName = rocketName;
         this.rocketType = rocketType;
-        this.firstStage = firstStage;
-        this.secondStage = secondStage;
+
         this.fairings = fairings;
     }
 
@@ -76,22 +80,6 @@ public class Rocket implements Serializable
 
     public void setRocketType(String rocketType) {
         this.rocketType = rocketType;
-    }
-
-    public FirstStage getFirstStage() {
-        return firstStage;
-    }
-
-    public void setFirstStage(FirstStage firstStage) {
-        this.firstStage = firstStage;
-    }
-
-    public SecondStage getSecondStage() {
-        return secondStage;
-    }
-
-    public void setSecondStage(SecondStage secondStage) {
-        this.secondStage = secondStage;
     }
 
     public Fairings getFairings() {

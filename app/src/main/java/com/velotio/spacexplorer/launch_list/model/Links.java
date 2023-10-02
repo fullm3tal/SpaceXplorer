@@ -1,13 +1,21 @@
 package com.velotio.spacexplorer.launch_list.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Links implements Serializable
 {
-
+    @ColumnInfo(name = "links_uid")
+    @PrimaryKey
+    public Long id;
     @SerializedName("mission_patch")
     @Expose
     private String missionPatch;
@@ -16,19 +24,19 @@ public class Links implements Serializable
     private String missionPatchSmall;
     @SerializedName("reddit_campaign")
     @Expose
-    private Object redditCampaign;
+    private String redditCampaign;
     @SerializedName("reddit_launch")
     @Expose
-    private Object redditLaunch;
+    private String redditLaunch;
     @SerializedName("reddit_recovery")
     @Expose
-    private Object redditRecovery;
+    private String redditRecovery;
     @SerializedName("reddit_media")
     @Expose
-    private Object redditMedia;
+    private String redditMedia;
     @SerializedName("presskit")
     @Expose
-    private Object presskit;
+    private String presskit;
     @SerializedName("article_link")
     @Expose
     private String articleLink;
@@ -41,22 +49,22 @@ public class Links implements Serializable
     @SerializedName("youtube_id")
     @Expose
     private String youtubeId;
-    @SerializedName("flickr_images")
-    @Expose
-    private List<Object> flickrImages;
+
     private final static long serialVersionUID = -3603052743706433193L;
+
+
 
     /**
      * No args constructor for use in serialization
      *
      */
     public Links() {
+
     }
 
     /**
      *
      * @param articleLink
-     * @param flickrImages
      * @param missionPatch
      * @param missionPatchSmall
      * @param redditRecovery
@@ -68,7 +76,9 @@ public class Links implements Serializable
      * @param presskit
      * @param redditLaunch
      */
-    public Links(String missionPatch, String missionPatchSmall, Object redditCampaign, Object redditLaunch, Object redditRecovery, Object redditMedia, Object presskit, String articleLink, String wikipedia, String videoLink, String youtubeId, List<Object> flickrImages) {
+
+    @Ignore
+    public Links(String missionPatch, String missionPatchSmall, String redditCampaign, String redditLaunch, String redditRecovery, String redditMedia, String presskit, String articleLink, String wikipedia, String videoLink, String youtubeId, List<String> flickrImages) {
         super();
         this.missionPatch = missionPatch;
         this.missionPatchSmall = missionPatchSmall;
@@ -81,8 +91,9 @@ public class Links implements Serializable
         this.wikipedia = wikipedia;
         this.videoLink = videoLink;
         this.youtubeId = youtubeId;
-        this.flickrImages = flickrImages;
     }
+
+
 
     public String getMissionPatch() {
         return missionPatch;
@@ -100,43 +111,43 @@ public class Links implements Serializable
         this.missionPatchSmall = missionPatchSmall;
     }
 
-    public Object getRedditCampaign() {
+    public String getRedditCampaign() {
         return redditCampaign;
     }
 
-    public void setRedditCampaign(Object redditCampaign) {
+    public void setRedditCampaign(String redditCampaign) {
         this.redditCampaign = redditCampaign;
     }
 
-    public Object getRedditLaunch() {
+    public String getRedditLaunch() {
         return redditLaunch;
     }
 
-    public void setRedditLaunch(Object redditLaunch) {
+    public void setRedditLaunch(String redditLaunch) {
         this.redditLaunch = redditLaunch;
     }
 
-    public Object getRedditRecovery() {
+    public String getRedditRecovery() {
         return redditRecovery;
     }
 
-    public void setRedditRecovery(Object redditRecovery) {
+    public void setRedditRecovery(String redditRecovery) {
         this.redditRecovery = redditRecovery;
     }
 
-    public Object getRedditMedia() {
+    public String getRedditMedia() {
         return redditMedia;
     }
 
-    public void setRedditMedia(Object redditMedia) {
+    public void setRedditMedia(String redditMedia) {
         this.redditMedia = redditMedia;
     }
 
-    public Object getPresskit() {
+    public String getPresskit() {
         return presskit;
     }
 
-    public void setPresskit(Object presskit) {
+    public void setPresskit(String presskit) {
         this.presskit = presskit;
     }
 
@@ -170,14 +181,6 @@ public class Links implements Serializable
 
     public void setYoutubeId(String youtubeId) {
         this.youtubeId = youtubeId;
-    }
-
-    public List<Object> getFlickrImages() {
-        return flickrImages;
-    }
-
-    public void setFlickrImages(List<Object> flickrImages) {
-        this.flickrImages = flickrImages;
     }
 
 }

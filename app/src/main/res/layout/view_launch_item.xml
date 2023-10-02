@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:hint="Falcon"
-            android:text="@{launchInfo.getLaunchSuccess() ? `Success` : `Failure`}"
+            android:text="@{launchInfo.getSpaceLaunchStatus()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="@id/ivLaunchNickName"
             app:layout_constraintTop_toBottomOf="@id/ivLaunchNickName" />

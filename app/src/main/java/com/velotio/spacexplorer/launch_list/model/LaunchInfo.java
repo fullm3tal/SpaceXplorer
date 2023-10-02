@@ -1,24 +1,27 @@
 package com.velotio.spacexplorer.launch_list.model;
 
 
-import java.io.Serializable;
-import java.util.List;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.velotio.spacexplorer.R;
 
+import java.io.Serializable;
+
+@Entity
 public class LaunchInfo implements Serializable {
 
+
+    @PrimaryKey
     @SerializedName("flight_number")
     @Expose
     private Integer flightNumber;
     @SerializedName("mission_name")
     @Expose
     private String missionName;
-    @SerializedName("mission_id")
-    @Expose
-    private List<Object> missionId;
     @SerializedName("upcoming")
     @Expose
     private Boolean upcoming;
@@ -46,46 +49,38 @@ public class LaunchInfo implements Serializable {
     @SerializedName("launch_window")
     @Expose
     private Integer launchWindow;
+
+    @Embedded
     @SerializedName("rocket")
     @Expose
     private Rocket rocket;
-    @SerializedName("ships")
-    @Expose
-    private List<Object> ships;
-    @SerializedName("telemetry")
-    @Expose
-    private Telemetry telemetry;
+
+    @Embedded
     @SerializedName("launch_site")
     @Expose
     private LaunchSite launchSite;
     @SerializedName("launch_success")
     @Expose
     private Boolean launchSuccess;
+
+    @Embedded
     @SerializedName("launch_failure_details")
     @Expose
     private LaunchFailureDetails launchFailureDetails;
+
+    @Embedded
     @SerializedName("links")
     @Expose
     private Links links;
     @SerializedName("details")
     @Expose
     private String details;
-    @SerializedName("static_fire_date_utc")
-    @Expose
-    private Object staticFireDateUtc;
-    @SerializedName("static_fire_date_unix")
-    @Expose
-    private Object staticFireDateUnix;
-    @SerializedName("timeline")
-    @Expose
-    private Timeline timeline;
-    @SerializedName("crew")
-    @Expose
-    private Object crew;
 
     private final static long serialVersionUID = 7238764591150557943L;
 
     private boolean favorite = false;
+
+    private String spaceLaunchStatus;
 
     private Integer launchFavorite = R.drawable.star_outline;
 
@@ -105,16 +100,23 @@ public class LaunchInfo implements Serializable {
         this.favorite = favorite;
     }
 
+    public String getSpaceLaunchStatus() {
+        return spaceLaunchStatus;
+    }
+
+    public void setSpaceLaunchStatus(String spaceLaunchStatus) {
+        this.spaceLaunchStatus = spaceLaunchStatus;
+    }
+
     /**
      * No args constructor for use in serialization
      */
-    public LaunchInfo() {
+    public LaunchInfo(){
+
     }
 
     /**
      * @param tentativeMaxPrecision
-     * @param staticFireDateUtc
-     * @param missionId
      * @param launchYear
      * @param isTentative
      * @param rocket
@@ -122,26 +124,20 @@ public class LaunchInfo implements Serializable {
      * @param launchFailureDetails
      * @param launchDateLocal
      * @param flightNumber
-     * @param crew
-     * @param ships
      * @param tbd
      * @param missionName
      * @param launchDateUtc
      * @param launchSuccess
-     * @param timeline
-     * @param telemetry
      * @param links
      * @param details
-     * @param staticFireDateUnix
      * @param launchDateUnix
      * @param launchWindow
      * @param upcoming
      */
-    public LaunchInfo(Integer flightNumber, String missionName, List<Object> missionId, Boolean upcoming, String launchYear, Integer launchDateUnix, String launchDateUtc, String launchDateLocal, Boolean isTentative, String tentativeMaxPrecision, Boolean tbd, Integer launchWindow, Rocket rocket, List<Object> ships, Telemetry telemetry, LaunchSite launchSite, Boolean launchSuccess, LaunchFailureDetails launchFailureDetails, Links links, String details, Object staticFireDateUtc, Object staticFireDateUnix, Timeline timeline, Object crew) {
+    public LaunchInfo(Integer flightNumber, String missionName, Boolean upcoming, String launchYear, Integer launchDateUnix, String launchDateUtc, String launchDateLocal, Boolean isTentative, String tentativeMaxPrecision, Boolean tbd, Integer launchWindow, Rocket rocket,   LaunchSite launchSite, Boolean launchSuccess, LaunchFailureDetails launchFailureDetails, Links links, String details) {
         super();
         this.flightNumber = flightNumber;
         this.missionName = missionName;
-        this.missionId = missionId;
         this.upcoming = upcoming;
         this.launchYear = launchYear;
         this.launchDateUnix = launchDateUnix;
@@ -152,17 +148,22 @@ public class LaunchInfo implements Serializable {
         this.tbd = tbd;
         this.launchWindow = launchWindow;
         this.rocket = rocket;
-        this.ships = ships;
-        this.telemetry = telemetry;
         this.launchSite = launchSite;
         this.launchSuccess = launchSuccess;
         this.launchFailureDetails = launchFailureDetails;
         this.links = links;
         this.details = details;
-        this.staticFireDateUtc = staticFireDateUtc;
-        this.staticFireDateUnix = staticFireDateUnix;
-        this.timeline = timeline;
-        this.crew = crew;
+
+    }
+
+    public void updateSpaceLaunchStatus(){
+        if(launchSuccess != null && launchSuccess) {
+            setSpaceLaunchStatus("Success");
+        } else if (upcoming != null && upcoming) {
+            setSpaceLaunchStatus("Upcoming");
+        } else {
+            setSpaceLaunchStatus("Failure");
+        }
     }
 
     public Integer getFlightNumber() {
@@ -181,13 +182,6 @@ public class LaunchInfo implements Serializable {
         this.missionName = missionName;
     }
 
-    public List<Object> getMissionId() {
-        return missionId;
-    }
-
-    public void setMissionId(List<Object> missionId) {
-        this.missionId = missionId;
-    }
 
     public Boolean getUpcoming() {
         return upcoming;
@@ -269,22 +263,6 @@ public class LaunchInfo implements Serializable {
         this.rocket = rocket;
     }
 
-    public List<Object> getShips() {
-        return ships;
-    }
-
-    public void setShips(List<Object> ships) {
-        this.ships = ships;
-    }
-
-    public Telemetry getTelemetry() {
-        return telemetry;
-    }
-
-    public void setTelemetry(Telemetry telemetry) {
-        this.telemetry = telemetry;
-    }
-
     public LaunchSite getLaunchSite() {
         return launchSite;
     }
@@ -323,38 +301,6 @@ public class LaunchInfo implements Serializable {
 
     public void setDetails(String details) {
         this.details = details;
-    }
-
-    public Object getStaticFireDateUtc() {
-        return staticFireDateUtc;
-    }
-
-    public void setStaticFireDateUtc(Object staticFireDateUtc) {
-        this.staticFireDateUtc = staticFireDateUtc;
-    }
-
-    public Object getStaticFireDateUnix() {
-        return staticFireDateUnix;
-    }
-
-    public void setStaticFireDateUnix(Object staticFireDateUnix) {
-        this.staticFireDateUnix = staticFireDateUnix;
-    }
-
-    public Timeline getTimeline() {
-        return timeline;
-    }
-
-    public void setTimeline(Timeline timeline) {
-        this.timeline = timeline;
-    }
-
-    public Object getCrew() {
-        return crew;
-    }
-
-    public void setCrew(Object crew) {
-        this.crew = crew;
     }
 
 }

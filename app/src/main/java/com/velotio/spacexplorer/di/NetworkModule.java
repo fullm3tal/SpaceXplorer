@@ -1,5 +1,7 @@
 package com.velotio.spacexplorer.di;
 
+import com.velotio.spacexplorer.service.SpaceXService;
+
 import javax.inject.Singleton;
 
 import dagger.Module;

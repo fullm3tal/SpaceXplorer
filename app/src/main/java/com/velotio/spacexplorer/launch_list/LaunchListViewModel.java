@@ -1,19 +1,12 @@
 package com.velotio.spacexplorer.launch_list;
 
-import android.util.Log;
-
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.velotio.spacexplorer.ILaunchListResponse;
 import com.velotio.spacexplorer.launch_list.model.LaunchInfo;
-
-import java.util.ArrayList;
-
+import com.velotio.spacexplorer.launch_list.model.LaunchListResponse;
+import java.util.Objects;
 import javax.inject.Inject;
-
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
@@ -21,41 +14,33 @@ public class LaunchListViewModel extends ViewModel {
 
     ILaunchListRepository repository;
 
-    MutableLiveData<ArrayList<LaunchInfo>> listMutableLiveData = new MutableLiveData<>();
-    LiveData<ArrayList<LaunchInfo>> listLiveData = listMutableLiveData;
+    LiveData<LaunchListResponse> launchListResponseLiveData;
 
-    MutableLiveData<Boolean> favoriteMutableLiveData = new MutableLiveData<>(false);
-    LiveData<Boolean> favoriteLiveData = favoriteMutableLiveData;
+    private final MutableLiveData<Integer> favoriteMutableLiveData = new MutableLiveData<>(null);
+    LiveData<Integer> favoriteLiveData = favoriteMutableLiveData;
 
     @Inject
     public LaunchListViewModel(ILaunchListRepository iLaunchListRepository) {
         repository = iLaunchListRepository;
+        setLaunchList();
     }
 
-    public void fetchLaunchInfoFromServer() {
-        repository.fetchLaunchListFromServer(new ILaunchListResponse() {
-            @Override
-            public void onResponse(@Nullable ArrayList<LaunchInfo> response) {
-                assert response != null;
-                Log.e("TAG", "response.size=" + response.size());
-                listMutableLiveData.setValue(response);
-            }
+    public void setLaunchList(){
+        launchListResponseLiveData = repository.fetchLaunchListFromServer();
+    }
 
-            @Override
-            public void onFailure(@Nullable Throwable t) {
-                Log.e("TAG", "Failure" + t);
-                listMutableLiveData.setValue(new ArrayList<>());
-            }
-        });
+    public LiveData<LaunchListResponse> getLaunchInfo() {
+        return launchListResponseLiveData;
     }
 
     public void setLaunchFavorite(boolean isFavorite, int position) {
         try {
-            LaunchInfo launchInfo = listMutableLiveData.getValue().get(position);
+            LaunchInfo launchInfo = Objects.requireNonNull(launchListResponseLiveData.getValue()).list.get(position);
             launchInfo.setFavorite(isFavorite);
-            favoriteMutableLiveData.setValue(true);
+            favoriteMutableLiveData.setValue(position);
+            repository.updateLaunchInfo(launchInfo);
         } finally {
-            favoriteMutableLiveData.setValue(false);
+            favoriteMutableLiveData.setValue(null);
         }
 
     }

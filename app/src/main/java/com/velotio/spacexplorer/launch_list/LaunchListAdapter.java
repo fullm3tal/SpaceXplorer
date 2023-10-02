@@ -41,7 +41,6 @@ public class LaunchListAdapter extends RecyclerView.Adapter<LaunchListAdapter.La
         return list.size();
     }
 
-
     class LaunchListViewHolder extends RecyclerView.ViewHolder {
 
         public ViewLaunchItemBinding launchBinding;
@@ -52,16 +51,14 @@ public class LaunchListAdapter extends RecyclerView.Adapter<LaunchListAdapter.La
         }
 
         public void bind(LaunchInfo launchInfo, int position) {
+            if (launchInfo != null) {
+                launchInfo.updateSpaceLaunchStatus();
+            }
+
             launchBinding.setLaunchInfo(launchInfo);
             launchBinding.executePendingBindings();
             launchBinding.ivFavorite.setOnClickListener(v -> {
-                if (launchInfo.getFavorite()) {
-                    viewModel.setLaunchFavorite(false, position);
-                    launchBinding.ivFavorite.setImageResource(R.drawable.star_outline);
-                } else {
-                    viewModel.setLaunchFavorite(true, position);
-                    launchBinding.ivFavorite.setImageResource(R.drawable.baseline_star);
-                }
+                viewModel.setLaunchFavorite(!launchInfo.getFavorite(), position);
             });
         }
 

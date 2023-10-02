@@ -1,25 +1,27 @@
 package com.velotio.spacexplorer.launch_list.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Payload implements Serializable
 {
-
+    @ColumnInfo(name = "payload_uid")
+    @PrimaryKey
+    public Long id;
     @SerializedName("payload_id")
     @Expose
     private String payloadId;
-    @SerializedName("norad_id")
-    @Expose
-    private List<Object> noradId;
     @SerializedName("reused")
     @Expose
     private Boolean reused;
-    @SerializedName("customers")
-    @Expose
-    private List<String> customers;
     @SerializedName("nationality")
     @Expose
     private String nationality;
@@ -31,16 +33,13 @@ public class Payload implements Serializable
     private String payloadType;
     @SerializedName("payload_mass_kg")
     @Expose
-    private Object payloadMassKg;
+    private Double payloadMassKg;
     @SerializedName("payload_mass_lbs")
     @Expose
-    private Object payloadMassLbs;
+    private Double payloadMassLbs;
     @SerializedName("orbit")
     @Expose
     private String orbit;
-    @SerializedName("orbit_params")
-    @Expose
-    private OrbitParams orbitParams;
     private final static long serialVersionUID = -8306574962610614685L;
 
     /**
@@ -54,29 +53,23 @@ public class Payload implements Serializable
      *
      * @param payloadId
      * @param payloadMassLbs
-     * @param noradId
      * @param nationality
      * @param payloadType
      * @param payloadMassKg
-     * @param customers
-     * @param orbit
      * @param reused
-     * @param orbitParams
      * @param manufacturer
      */
-    public Payload(String payloadId, List<Object> noradId, Boolean reused, List<String> customers, String nationality, String manufacturer, String payloadType, Object payloadMassKg, Object payloadMassLbs, String orbit, OrbitParams orbitParams) {
+
+    @Ignore
+    public Payload(String payloadId, Boolean reused, String nationality, String manufacturer, String payloadType, Double payloadMassKg, Double payloadMassLbs) {
         super();
         this.payloadId = payloadId;
-        this.noradId = noradId;
         this.reused = reused;
-        this.customers = customers;
         this.nationality = nationality;
         this.manufacturer = manufacturer;
         this.payloadType = payloadType;
         this.payloadMassKg = payloadMassKg;
         this.payloadMassLbs = payloadMassLbs;
-        this.orbit = orbit;
-        this.orbitParams = orbitParams;
     }
 
     public String getPayloadId() {
@@ -87,28 +80,12 @@ public class Payload implements Serializable
         this.payloadId = payloadId;
     }
 
-    public List<Object> getNoradId() {
-        return noradId;
-    }
-
-    public void setNoradId(List<Object> noradId) {
-        this.noradId = noradId;
-    }
-
     public Boolean getReused() {
         return reused;
     }
 
     public void setReused(Boolean reused) {
         this.reused = reused;
-    }
-
-    public List<String> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(List<String> customers) {
-        this.customers = customers;
     }
 
     public String getNationality() {
@@ -135,19 +112,19 @@ public class Payload implements Serializable
         this.payloadType = payloadType;
     }
 
-    public Object getPayloadMassKg() {
+    public Double getPayloadMassKg() {
         return payloadMassKg;
     }
 
-    public void setPayloadMassKg(Object payloadMassKg) {
+    public void setPayloadMassKg(Double payloadMassKg) {
         this.payloadMassKg = payloadMassKg;
     }
 
-    public Object getPayloadMassLbs() {
+    public Double getPayloadMassLbs() {
         return payloadMassLbs;
     }
 
-    public void setPayloadMassLbs(Object payloadMassLbs) {
+    public void setPayloadMassLbs(Double payloadMassLbs) {
         this.payloadMassLbs = payloadMassLbs;
     }
 
@@ -157,14 +134,6 @@ public class Payload implements Serializable
 
     public void setOrbit(String orbit) {
         this.orbit = orbit;
-    }
-
-    public OrbitParams getOrbitParams() {
-        return orbitParams;
-    }
-
-    public void setOrbitParams(OrbitParams orbitParams) {
-        this.orbitParams = orbitParams;
     }
 
 }
