@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/launchListFragment"
-        android:name="com.velotio.spacexplorer.LaunchListFragment"
+        android:name="com.velotio.spacexplorer.launch_list.LaunchListFragment"
         android:label="fragment_launch_list"
         tools:layout="@layout/fragment_launch_list">
     </fragment>
